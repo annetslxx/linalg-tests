@@ -1,0 +1,3 @@
+[submodule "linalg"]
+	path = linalg
+	url = https://git.miem.hse.ru/lab-1/linalg.git
