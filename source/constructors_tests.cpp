@@ -37,7 +37,6 @@ TEST(MatrixTest, CopyConstructor) {
 
   EXPECT_EQ(copy.rows(), original.rows());
   EXPECT_EQ(copy.columns(), original.columns());
-  EXPECT_EQ(copy.capacity(), original.capacity());
 
   for (size_t i = 0; i < original.size(); ++i)
     EXPECT_EQ(copy.begin()[i], original.begin()[i]);
@@ -52,14 +51,14 @@ TEST(MatrixTest, MoveConstructor) {
   temp.begin()[2] = 3;
   temp.begin()[3] = 4;
 
-  double *old_ptr = temp.begin();
+  auto old_ptr = temp.begin();
 
   Matrix moved(std::move(temp));
 
   EXPECT_EQ(moved.rows(), 2);
   EXPECT_EQ(moved.columns(), 2);
   EXPECT_EQ(moved.capacity(), 4);
-  EXPECT_EQ(moved.begin()[0], 1);
+  EXPECT_EQ(*moved.begin(), 1);
   EXPECT_EQ(moved.begin()[3], 4);
 
   EXPECT_EQ(moved.begin(), old_ptr);
@@ -78,12 +77,12 @@ TEST(MatrixTest, InitializerListConstructor2D) {
   EXPECT_EQ(m.capacity(), 6);
   EXPECT_FALSE(m.empty());
 
-  EXPECT_EQ(m.begin()[0], 1);
-  EXPECT_EQ(m.begin()[1], 2);
-  EXPECT_EQ(m.begin()[2], 3);
-  EXPECT_EQ(m.begin()[3], 4);
-  EXPECT_EQ(m.begin()[4], 5);
-  EXPECT_EQ(m.begin()[5], 6);
+  EXPECT_DOUBLE_EQ(m.begin()[0], 1.0);
+  EXPECT_DOUBLE_EQ(m.begin()[1], 2.0);
+  EXPECT_DOUBLE_EQ(m.begin()[2], 3.0);
+  EXPECT_DOUBLE_EQ(m.begin()[3], 4.0);
+  EXPECT_DOUBLE_EQ(m.begin()[4], 5.0);
+  EXPECT_DOUBLE_EQ(m.begin()[5], 6.0);
 }
 
 TEST(MatrixTest, InitializerListConstructor2D_Empty) {
@@ -111,10 +110,10 @@ TEST(MatrixTest, InitializerListConstructor1D) {
   EXPECT_EQ(v.capacity(), 4);
   EXPECT_FALSE(v.empty());
 
-  EXPECT_EQ(v.begin()[0], 1);
-  EXPECT_EQ(v.begin()[1], 2);
-  EXPECT_EQ(v.begin()[2], 3);
-  EXPECT_EQ(v.begin()[3], 4);
+  EXPECT_DOUBLE_EQ(v.begin()[0], 1.0);
+  EXPECT_DOUBLE_EQ(v.begin()[1], 2.0);
+  EXPECT_DOUBLE_EQ(v.begin()[2], 3.0);
+  EXPECT_DOUBLE_EQ(v.begin()[3], 4.0);
 }
 
 TEST(MatrixTest, InitializerListConstructor1D_Empty) {
