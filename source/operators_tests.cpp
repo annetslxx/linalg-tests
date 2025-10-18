@@ -72,3 +72,70 @@ TEST(MatrixTest, AssignmentWithCapacityReuse) {
   EXPECT_EQ(m1.rows(), 2);
   EXPECT_EQ(m1.columns(), 2);
 }
+
+TEST(MatrixTest, UnaryPlus) {
+  Matrix m = {{1, 2}, {3, 4}};
+  Matrix result = +m;
+  EXPECT_DOUBLE_EQ(result(0, 0), 1.0);
+  EXPECT_DOUBLE_EQ(result(1, 1), 4.0);
+}
+
+TEST(MatrixTest, UnaryMinus) {
+  Matrix m = {{1, 2}, {3, 4}};
+  Matrix result = -m;
+  EXPECT_DOUBLE_EQ(result(0, 0), -1.0);
+  EXPECT_DOUBLE_EQ(result(1, 1), -4.0);
+}
+
+TEST(MatrixTest, Addition) {
+  Matrix a = {{1, 2}, {3, 4}};
+  Matrix b = {{5, 6}, {7, 8}};
+  Matrix c = a + b;
+  EXPECT_DOUBLE_EQ(c(0, 0), 6.0);
+  EXPECT_DOUBLE_EQ(c(1, 1), 12.0);
+}
+
+TEST(MatrixTest, MultiplicationScalar) {
+  Matrix m = {{1, 2}, {3, 4}};
+  Matrix r1 = m * 2.0;
+  Matrix r2 = 2.0 * m;
+  EXPECT_DOUBLE_EQ(r1(0, 0), 2.0);
+  EXPECT_DOUBLE_EQ(r2(1, 1), 8.0);
+}
+
+TEST(MatrixTest, Equality) {
+  Matrix a = {{1.0, 2.0}, {3.0, 4.0}};
+  Matrix b = {{1.0, 2.0}, {3.0, 4.0}};
+  EXPECT_TRUE(a == b);
+  EXPECT_FALSE(a != b);
+}
+
+TEST(MatrixTest, AdditionDimensionMismatch) {
+  Matrix a(2, 2);
+  Matrix b(3, 3);
+  EXPECT_THROW(a += b, std::runtime_error);
+}
+
+TEST(MatrixTest, EmptyMatrixOutput) {
+  Matrix m;
+  std::ostringstream oss;
+  oss << m;
+  EXPECT_TRUE(m.empty());
+  EXPECT_EQ(oss.str(), "||");
+}
+
+TEST(MatrixTest, SingleElementMatrix) {
+  Matrix m = {3.1415};
+  std::ostringstream oss;
+  oss << m;
+  EXPECT_EQ(oss.str(), "|3.14|");
+}
+
+TEST(MatrixTest, SpacingBetweenColumns) {
+  Matrix m = {{1.0006565, 2.71454, 3.67}, {0.4,5.1,6.666666666666666666666666666666666666666666666666666}};
+  std::ostringstream oss;
+  oss << m;
+  std::string result = oss.str();
+
+  EXPECT_EQ(result, "|1.00 2.71 3.67|\n|0.40 5.10 6.67|");
+}
