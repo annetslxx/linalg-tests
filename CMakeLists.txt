@@ -9,6 +9,10 @@ add_subdirectory(googletest)
 
 add_executable(tests ${my_source})
 
+if(WIN32)
+    set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
+endif()
+
 target_link_libraries(tests PUBLIC
         linalg
         gtest
