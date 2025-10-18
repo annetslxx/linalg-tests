@@ -65,7 +65,7 @@ TEST(MatrixTest, AssignmentWithCapacityReuse) {
 
   m1 = m2;
 
-  EXPECT_NE(m1.capacity(), old_capacity);
+  EXPECT_EQ(m1.capacity(), old_capacity);
   EXPECT_EQ(m1.rows(), 2);
   EXPECT_EQ(m1.columns(), 2);
 }
