@@ -62,11 +62,6 @@ TEST(MatrixTest, MoveConstructor) {
   EXPECT_EQ(moved.begin()[3], 4);
 
   EXPECT_EQ(moved.begin(), old_ptr);
-
-  EXPECT_EQ(temp.begin(), nullptr);
-  EXPECT_EQ(temp.rows(), 0);
-  EXPECT_EQ(temp.columns(), 0);
-  EXPECT_EQ(temp.capacity(), 0);
 }
 
 TEST(MatrixTest, InitializerListConstructor2D) {

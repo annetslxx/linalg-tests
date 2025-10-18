@@ -200,3 +200,61 @@ TEST(MatrixTest, PowerOfInverse) {
 
   EXPECT_TRUE(left == right);
 }
+
+TEST(MatrixTest, SolvesSimple2x2System) {
+  Matrix A = {{2.0, 1.0}, {1.0, 3.0}};
+  Matrix f = {3.0, 4.0};
+
+  Matrix x = solve(A, f);
+
+  EXPECT_NEAR(x(0, 0), 1.0, 1e-9);
+  EXPECT_NEAR(x(1, 0), 1.0, 1e-9);
+}
+
+TEST(MatrixTest, SolvesIdentityMatrix) {
+  Matrix A = {{1.0, 0.0, 0.0}, {0.0, 1.0, 0.0}, {0.0, 0.0, 1.0}};
+  Matrix f = {2.0, 3.0, 4.0};
+
+  Matrix x = solve(A, f);
+
+  EXPECT_NEAR(x(0, 0), 2.0, 1e-9);
+  EXPECT_NEAR(x(1, 0), 3.0, 1e-9);
+  EXPECT_NEAR(x(2, 0), 4.0, 1e-9);
+}
+
+TEST(MatrixTest, ThrowsOnSingularMatrix) {
+  Matrix A = {{1.0, 2.0}, {2.0, 4.0}};
+  Matrix f = {5.0, 10.0};
+
+  EXPECT_THROW(solve(A, f), std::runtime_error);
+}
+
+TEST(MatrixTest, ThrowsWhenInconsistentSystem) {
+  Matrix A = {{1.0, 1.0}, {1.0, 1.0}};
+  Matrix f = {
+      2.0, 3.0 // противоречие
+  };
+
+  EXPECT_THROW(solve(A, f), std::runtime_error);
+}
+
+TEST(MatrixTest, SolvesLargerSystem) {
+  Matrix A = {{3, 2, -1}, {2, -2, 4}, {-1, 0.5, -1}};
+  Matrix f = {1, -2, 0};
+  Matrix x = solve(A, f);
+
+  EXPECT_NEAR(x(0, 0), 1.0, 1e-9);
+  EXPECT_NEAR(x(1, 0), -2.0, 1e-9);
+  EXPECT_NEAR(x(2, 0), -2.0, 1e-9);
+}
+
+TEST(MatrixTest, 4x4SLAU) {
+  std::cout.precision(2);
+
+  Matrix A = {{2, 1, -1, 3}, {1, 2, 3, 2}, {3, -1, -1, 4}, {2, 3, 2, 1}};
+
+  Matrix b = {4, 16, 2, 15};
+  Matrix c = {1.0, 2.0, 3.0, 1.0};
+
+  EXPECT_TRUE(solve(A, b) == c);
+}
