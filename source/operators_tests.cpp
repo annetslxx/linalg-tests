@@ -118,5 +118,5 @@ TEST(MatrixTest, EmptyMatrixOutput) {
   std::ostringstream oss;
   oss << m;
   EXPECT_TRUE(m.empty());
-  EXPECT_EQ(oss.str(), "||");
+  EXPECT_EQ(oss.str(), "");
 }
