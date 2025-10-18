@@ -132,7 +132,9 @@ TEST(MatrixTest, SingleElementMatrix) {
 }
 
 TEST(MatrixTest, SpacingBetweenColumns) {
-  Matrix m = {{1.0006565, 2.71454, 3.67}, {0.4,5.1,6.666666666666666666666666666666666666666666666666666}};
+  Matrix m = {
+      {1.0006565, 2.71454, 3.67},
+      {0.4, 5.1, 6.666666666666666666666666666666666666666666666666666}};
   std::ostringstream oss;
   oss << m;
   std::string result = oss.str();

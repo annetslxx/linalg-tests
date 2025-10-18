@@ -96,10 +96,7 @@ TEST(MatrixTest, InitializerListConstructor2D_Empty) {
 }
 
 TEST(MatrixTest, InitializerListConstructor2D_InvalidRowSize) {
-  EXPECT_THROW(
-    Matrix m({{1, 2}, {3, 4, 5}}),
-    std::runtime_error
-  );
+  EXPECT_THROW(Matrix m({{1, 2}, {3, 4, 5}}), std::runtime_error);
 }
 
 TEST(MatrixTest, InitializerListConstructor1D) {
@@ -125,4 +122,3 @@ TEST(MatrixTest, InitializerListConstructor1D_Empty) {
   EXPECT_EQ(v.capacity(), 0);
   EXPECT_EQ(v.begin(), nullptr);
 }
-
