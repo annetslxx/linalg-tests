@@ -120,3 +120,53 @@ TEST(MatrixTest, EmptyMatrixOutput) {
   EXPECT_TRUE(m.empty());
   EXPECT_EQ(oss.str(), "");
 }
+
+// оператор [] для неконстантной матрицы
+TEST(MatrixTest, SquareBracketOperator) {
+  Matrix m = {{1.0, 2.0, 3.0},
+              {4.0, 5.0, 6.0}};
+
+  // Проверка чтения
+  EXPECT_DOUBLE_EQ(m[0][0], 1.0);
+  EXPECT_DOUBLE_EQ(m[0][1], 2.0);
+  EXPECT_DOUBLE_EQ(m[1][2], 6.0);
+
+  // Проверка записи
+  m[0][0] = 10.0;
+  EXPECT_DOUBLE_EQ(m[0][0], 10.0);
+  EXPECT_DOUBLE_EQ(m(0, 0), 10.0);
+}
+
+// проверка оператора [] для константной матрицы
+TEST(MatrixTest, SquareBracketOperatorConst) {
+  const Matrix m = {{1.0, 2.0, 3.0},
+                    {4.0, 5.0, 6.0}};
+
+  EXPECT_DOUBLE_EQ(m[0][0], 1.0);
+  EXPECT_DOUBLE_EQ(m[1][1], 5.0);
+
+}
+
+TEST(MatrixTest, SquareBracketOperatorOutOfRange) {
+  Matrix m = {{1.0, 2.0}, {3.0, 4.0}};
+
+  // проверяем, что при выходе за границы матрицы, выбрасывается исключение
+  EXPECT_THROW(m[2][0], std::runtime_error);
+  EXPECT_THROW(m[100][0], std::runtime_error);
+  EXPECT_THROW(m[0][2], std::runtime_error);
+  EXPECT_THROW(m[1][5], std::runtime_error);
+}
+
+// проверяем [] через ()
+TEST(MatrixTest, SquareBracketOperatorConsistencyWithParentheses) {
+  Matrix m = {{1.1, 2.2}, {3.3, 4.4}};
+
+  EXPECT_DOUBLE_EQ(m[0][0], m(0, 0));
+  EXPECT_DOUBLE_EQ(m[1][1], m(1, 1));
+
+  m[0][1] = 99.9;
+  EXPECT_DOUBLE_EQ(m(0, 1), 99.9);
+
+  m(1, 0) = 88.8;
+  EXPECT_DOUBLE_EQ(m[1][0], 88.8);
+}
