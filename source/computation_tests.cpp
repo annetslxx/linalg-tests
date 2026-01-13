@@ -2,6 +2,7 @@
 // Created by Anna on 18.10.25.
 //
 
+#include <cmath>
 #include <gtest/gtest.h>
 #include <matrix.h>
 
